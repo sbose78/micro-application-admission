@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook-server
+  namespace: microapplication-webhook
+  labels:
+    app: webhook-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webhook-server
+  template:
+    metadata:
+      labels:
+        app: webhook-server
+    spec:
+      containers:
+      - name: server
+        image: quay.io/shbose/test:microapplication-admission
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8443
+          name: webhook-api
+        volumeMounts:
+        - name: webhook-tls-certs
+          mountPath: /run/secrets/tls
+          readOnly: true
+      volumes:
+      - name: webhook-tls-certs
+        secret:
+          secretName: webhook-server-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webhook-server
+  namespace: microapplication-webhook
+spec:
+  selector:
+    app: webhook-server
+  ports:
+    - port: 443
+      targetPort: webhook-api
+---
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: microapplication-webhook
+webhooks:
+  - name: webhook-server.microapplication-webhook.svc
+    clientConfig:
+      service:
+        name: webhook-server
+        namespace: microapplication-webhook
+        path: "/mutate"
+      caBundle: ${CA_PEM_B64}
+    rules:
+      - operations: [ "UPDATE" ]
+        apiGroups: ["argoproj.io"]
+        apiVersions: ["v1alpha1"]
+        resources: ["microapplications"]
+      - operations: [ "CREATE" ]
+        apiGroups: ["argoproj.io"]
+        apiVersions: ["v1alpha1"]
+        resources: ["microapplications"]
