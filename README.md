@@ -82,3 +82,8 @@ the shell environment variable `IMAGE` to an image tag for which you have push a
 build and push the image by running `make push-image`. Also make sure to change the image tag
 in `deployment/deployment.yaml.template`, and if necessary, add image pull secrets.
 
+
+## Credits
+
+This code is based on https://github.com/stackrox/admission-controller-webhook-demo
+
