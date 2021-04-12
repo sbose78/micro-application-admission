@@ -21,8 +21,20 @@ metadata:
 $ kubectl apply -f https://github.com/sbose78/micro-application/blob/main/config/crd/bases/argoproj.io_microapplications.yaml
 ```
 
-2. Run `./deploy.sh`. This will create a CA, a certificate and private key for the webhook server,
-and deploy the resources in the newly created `microapplication-webhook` namespace in your Kubernetes cluster.
+2.
+
+On OpenShift,
+
+```
+$ kubectl apply -f https://github.com/sbose78/micro-application-admission/blob/main/manifests/openshift/install.yaml
+```
+
+On other distributions of Kubernetes,
+
+```
+$ kubectl apply -f https://github.com/sbose78/micro-application-admission/blob/main/manifests/kubernetes/install.yaml
+```
+
 
 
 
