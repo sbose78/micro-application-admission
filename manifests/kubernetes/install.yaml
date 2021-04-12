@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: microapplication-webhook
+spec:
+  finalizers:
+  - kubernetes
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: webhook-server-tls
+  namespace: microapplication-webhook
+data:
+  tls.crt: >-
+    LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM0VENDQWNrQ0NRREl0Vmk5NjFPZTB6QU5CZ2txaGtpRzl3MEJBUVVGQURBdk1TMHdLd1lEVlFRRERDUkIKWkcxcGMzTnBiMjRnUTI5dWRISnZiR3hsY2lCWFpXSm9iMjlySUVSbGJXOGdRMEV3SGhjTk1qRXdOREV5TURReQpPVFEzV2hjTk1qRXdOVEV5TURReU9UUTNXakEyTVRRd01nWURWUVFEREN0M1pXSm9iMjlyTFhObGNuWmxjaTV0CmFXTnliMkZ3Y0d4cFkyRjBhVzl1TFhkbFltaHZiMnN1YzNaak1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0MKQVE4QU1JSUJDZ0tDQVFFQTErd01ta3Y1ZVdQR1Jzd2RSc04yMEZOc3JFcXE5SmRTMVZ2b0F0TTNHL0I4UTFQSApuUmlzV25YZ2lOQnRLNmtBT3RxYWlDTENHUC9DTmpUbjlWWEFaRzNEeVZSMVNyL01tVU12NXpoQ0pEWlVJK296CjYxakZKeGdpcWtBSW5vek1Pb1FJN3VVcGIzZS9tVDluNXpza0hyUHA2VFBraHE2eloreHJNM3d2dHFEMkxiY0EKUzVZZGo4UEtrcEpZMU5JNkVHWWZ6YXVYdmNUQ0N0dHZna1RLVnByK2JPc0FlZGhqT1dmSDVrYS9uMDhySC85RAp3bW5MS3NxNm44R202dzB1VUtERm0vYUc0dUd0bTJzZ3d2aHIzRWlyS2tlSVpxRmovV2xhcDg2RWhod2k1R0ZvCmdzVkpvWDVIVTgrNzZDdVNkNDgvL2VCR3FGb1VmU08xNlBjTVpRSURBUUFCTUEwR0NTcUdTSWIzRFFFQkJRVUEKQTRJQkFRQkdrdUlQa1oybENNVUg2V0lxV3V3bUdFM1NQRC9MdWcwdUFBRWlZdmt3NXlLdVFwdE03MktyeU1HOApCQ1R1bTBPVWFsanpKT0dTRTgwamF3NUwvRUYxWlE1TzM4RDNVeUlWN3NoZVcvamE4aGJZQmYvS21mY3FxYjFKCkc5eTBZUmNPMmdYVERSbXNMMEtEbUxnZ1ltdENXeTBRdWV2Q1VmNzUrZXNudXJTRy85Ri9MYU9PRFNzb1VXNHUKUlFxL1hUTWEvZmhzTDVsdW5HeHN4SXNrcTI2V3JoL1RBdmoxeDc4K2dUYVc1Yk5QbDRXSFcvZjV0V01ZQmlGawpTTEp0aHNjdUs0TkZZK1IxZmJGS0FIL05MaTFUdFVsdFFPZGJpd3pGMWR1L0V4bHE3NTBVWXFwTWZlVlVhUFkrCm5IT3h2RFAwRlVLdXQzNk51elc3d0VEbkVRanMKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+  tls.key: >-
+    LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBMSt3TW1rdjVlV1BHUnN3ZFJzTjIwRk5zckVxcTlKZFMxVnZvQXRNM0cvQjhRMVBICm5SaXNXblhnaU5CdEs2a0FPdHFhaUNMQ0dQL0NOalRuOVZYQVpHM0R5VlIxU3IvTW1VTXY1emhDSkRaVUkrb3oKNjFqRkp4Z2lxa0FJbm96TU9vUUk3dVVwYjNlL21UOW41enNrSHJQcDZUUGtocTZ6Wit4ck0zd3Z0cUQyTGJjQQpTNVlkajhQS2twSlkxTkk2RUdZZnphdVh2Y1RDQ3R0dmdrVEtWcHIrYk9zQWVkaGpPV2ZINWthL24wOHJILzlECndtbkxLc3E2bjhHbTZ3MHVVS0RGbS9hRzR1R3RtMnNnd3ZocjNFaXJLa2VJWnFGai9XbGFwODZFaGh3aTVHRm8KZ3NWSm9YNUhVOCs3NkN1U2Q0OC8vZUJHcUZvVWZTTzE2UGNNWlFJREFRQUJBb0lCQUFVU0N2MjRtUVFydnFVOAo5OWNJa2dxMFd0SDA4dXpKZk8xN3VnZ084N1ZaUVdISFh1R21pYTJhSlFxeGNrN2JLaUUzcnZkUmNhTnFwaUhsCnZpaTV1Y25oOWY0TldLL0hyME5PRzVyZmJGWXpYR2gzZ0g2ZldBbmgvRFpwU0lxSW5lY2w0SnZUajlTSlNGdU4KN0orMmVOT3J2K3QxQjRIT0tuSmZUK2ttbW13OGNsaE82Rk95UCt0dHVYenYycEJHbElNSzM2YmR6ZEN6Uk1LeQpLV3lCZ0h5L0xQR3JHbW9UeUFtaE12VlEybEU0aE1rZDNrTkhNRS94dFZqMmNTM1ZvVFFWZTBxd1dzZEhMTWVOCkZ4MDJUTEFQL3hKZFovK01Ia0VFOERuNGRqTytOUlU3L0tuMlRkYW03UTJtaklNYTdhbmZNQW5iNzlHd1pRL1IKaGFCd3J3VUNnWUVBL2U1NytJNCtISm5RNjNQQzdsSDRGeFNyNzhYamh5dnR4cEFGSG05MUF6Rkt1YXZZenBxcApzbngwOU05TjJCamMvck9oaS84OXJ0MEJwcXdIRFBEeFl2VEhwcEtzR0MxVnBzck9vRHVmdWtiMFlYOGNjUDJkCnZTcmdUMDNRaDdnMFZJQ2N1QVNicHdzMElWTUV2T1Zkcjd2bmw3TTJIbDJXTWgvKzJ6UmdGNmNDZ1lFQTJhNU8KRGNzNGRuT1lqOVRseWZoRDl5SEJaQ044R1hmZ1l4M2Rjdy8vQlNaZUlGbnVhdVdqSEVyM0RUbEZKbVBmeXF6TQpSYUNxR1hRMC9EaEw5ZXNBMXpkNHZ6SHYzV00zTHNoUTMwc1Aya2JlVkVFaERQQTdFNVpKb0pORC9ScGF4djlKClI5OVB3ckxGOUt1R21rUHYyNTBTb1V3cWRkNmJnUzlOaUxTSnZSTUNnWUVBMjNHSmVSZVQzYXVmdkpwaHp3clAKVjBMcUEyQUViUUF0ai9kT05Tc2srQWxWQm5mWCtWUDNhdVBiUHVVWDVMUTM1M1RkR3RzTk4xeU8zTGExc1IxWAp2YWpFRU5PWUhaeXY5R0EzaUlsK1U4Q1YyTnU4Zkhqd0pGWTFXdE5vYnFGbHQ5RWRubmw4K2pMWWJpUU1hQ0hmCmdNcm1MVmNXWWMrR3lQS1ZrR0lHMk9rQ2dZQmE1eGRoVzBRdzh3VDZ5NFZLV29ySFlTbEprQ2Y2MnJ5eHAzOGEKMWN0QmMweExaa0xTRVNPVVpSbldROXhFcytCNDJzQlRNMHpWWkZuY0dnWmVvOHl1RTFReFE4RlBTbWQ0K2Q0TAo0V1MxV25MdDdHVEk2bWxCUExseWZRMGZYU29iZi9BeU8yY3JmMHg3YUVYRmxpbE1KTVBxNTh1emZVcWpJQVhZCjJNdk1VUUtCZ0YzRFBReVFYZHlWd0crT2RrdGRWYVdpRGxGd3p5YVRUOForaE9YSHpoTDlhR1psY3ExV1AzQ20KeHQ5N3ZvbkFUczBzNmd0bmpyMHB6L0J5VFNYSzNPdnBRMkFFTTJWc3JoQ2Z6eElGQ2dqUEdGMVBFQUFYL2EzYgpaUVBmaTB2MzlrREVWaXo0ZzEzUmN1Rmw4QmhVaHBadTJlQkxLUDVKcnVWTHZpei9NYkFyCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==
+type: kubernetes.io/tls
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook-server
+  namespace: microapplication-webhook
+  labels:
+    app: webhook-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webhook-server
+  template:
+    metadata:
+      labels:
+        app: webhook-server
+    spec:
+      containers:
+      - name: server
+        image: quay.io/shbose/test:microapplication-admission
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8443
+          name: webhook-api
+        volumeMounts:
+        - name: webhook-tls-certs
+          mountPath: /run/secrets/tls
+          readOnly: true
+      volumes:
+      - name: webhook-tls-certs
+        secret:
+          secretName: webhook-server-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webhook-server
+  namespace: microapplication-webhook
+spec:
+  selector:
+    app: webhook-server
+  ports:
+    - port: 443
+      targetPort: webhook-api
+---
+apiVersion: admissionregistration.k8s.io
+kind: MutatingWebhookConfiguration
+metadata:
+  name: microapplication-webhook
+webhooks:
+  - name: webhook-server.microapplication-webhook.svc
+    clientConfig:
+      service:
+        name: webhook-server
+        namespace: microapplication-webhook
+        path: "/mutate"
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMyakNDQWNJQ0NRQ0xjRzVseldtVmREQU5CZ2txaGtpRzl3MEJBUXNGQURBdk1TMHdLd1lEVlFRRERDUkIKWkcxcGMzTnBiMjRnUTI5dWRISnZiR3hsY2lCWFpXSm9iMjlySUVSbGJXOGdRMEV3SGhjTk1qRXdOREV5TURReQpPVFEzV2hjTk1qRXdOVEV5TURReU9UUTNXakF2TVMwd0t3WURWUVFERENSQlpHMXBjM05wYjI0Z1EyOXVkSEp2CmJHeGxjaUJYWldKb2IyOXJJRVJsYlc4Z1EwRXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUsKQW9JQkFRQzlIb1pnNGl2bkkzREQyd0d4VHB1NFlYYitBQTVaNFNpV3JvUmlPc0tIcnY2Rk5lWUpPZXorYWp3bwpaSlVDTUp2T2U2Ry9lL1dFSnJVSnZBOFIrbGcvUFg4clZDRXJ5aXh4cWU1cEpnS2RXSnRRSEdKSDBlK3Baa0x1Cm5XdHEzUVQrYWFKVG9jcThycXgrUHJTM3N3WUppcWJRbUthdkxhdUhxenJNWkwrRjFjQ1hUZ0I4aGlrSHZGWUcKNWx0Y21ra3VYK2VlbXYrdXFha1krZHIxNk5PQ3FSUmd0L1FJRjlxK3ZQQWNXaTN0cFdlZnlTRHhkZ2N0MGtWLwptYXk0bGhZazVtQ1lzNmNiVytvM05kbVRrdzJUNm1hZEZURlozeFZNd3FDckxvR0VyR3VKZlZDQjhXYXdtaFRoCmltYXNzelVaWUE4cFlYQUw1ZW5RS0QyT0xCUGhBZ01CQUFFd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFJZTIKdVN6K3greGJSWGJiUFM2aHdHOUpneTU2L3dLUUZadTFWRExxa2FBRDVpL0NNd1pManArWUpLTDhTUk1zbWxKYQpxcmdKNVhMeTZqTkgyM1dqaE5UUGZRNi9iQkNWeXFSQ1g0L2JWQ1lBa2RSclhiVm02S0R6WjJRbGNOUHFKMjNZCmZCN0FwM1JBNlNkbFE2RTNZOEhrYUNHR1RKaWVPNW9GdkZZTFNGRmlQSlVmMThRQllwWmVlWHRScElaajhmVnEKZ0hSRE1ldThVRFB4Vm11OTNXY2NjNnlGNEh6Z2FxTldMemhTeFBOZ1Nab2NHK3ByOW8wUFhmWHlPOGpkT3hvWApaNmF3a1c5a0xERkczOVExTFhXTWJ5MitvU3ZpSUV0UWRVTDVrVWNGVjNBNFVpYk5pN2NNeUswelFCczhqVmlmClJ3clJSK2N4YWFhdzVVZG5Gb3M9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    rules:
+      - operations: [ "UPDATE" ]
+        apiGroups: ["argoproj.io"]
+        apiVersions: ["v1alpha1"]
+        resources: ["microapplications"]
+      - operations: [ "CREATE" ]
+        apiGroups: ["argoproj.io"]
+        apiVersions: ["v1alpha1"]
+        resources: ["microapplications"]
