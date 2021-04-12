@@ -58,7 +58,7 @@ kind: MutatingWebhookConfiguration
 metadata:
   name: microapplication-webhook
   annotations:
-    service.beta.openshift.io/inject-cabundle: true
+    service.beta.openshift.io/inject-cabundle: "true"
 webhooks:
   - name: webhook-server.microapplication-webhook.svc
     clientConfig:
