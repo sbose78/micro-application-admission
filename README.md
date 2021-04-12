@@ -21,7 +21,7 @@ metadata:
 $ kubectl apply -f https://github.com/sbose78/micro-application/blob/main/config/crd/bases/argoproj.io_microapplications.yaml
 ```
 
-2.
+2. Create the namespace and install the webhook.
 
 On OpenShift,
 
