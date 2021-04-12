@@ -66,7 +66,7 @@ webhooks:
         name: webhook-server
         namespace: microapplication-webhook
         path: "/mutate"
-      caBundle: ${CA_PEM_B64}
+    sideEffects: None
     rules:
       - operations: [ "UPDATE" ]
         apiGroups: ["argoproj.io"]
